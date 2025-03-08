@@ -30,3 +30,29 @@
   flex-direction: column;
   gap: 0.75rem;
 }
+
+/* Estilo geral para o contador de tarefas */
+.taskCounter {
+  font-size: 16px; 
+  color: #f2f2f2; 
+  margin-top: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background-color: #333;
+}
+
+/*tarefas completadas*/
+.completed {
+  font-weight: bold;
+  color: #ffffff; 
+}
+
+/*total de tarefas*/
+.total {
+  font-weight: bold;
+  color: #ffffff;
+}
+

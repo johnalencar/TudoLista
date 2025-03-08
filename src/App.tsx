@@ -2,17 +2,12 @@ import { PlusCircle } from '@phosphor-icons/react'
 
 import styles from './App.module.css'
 
-<<<<<<< HEAD
-import { Button, Input, Empty, Item, Header } from './components'
 import { useState } from 'react'
-=======
-import { Button } from './components/Button'
-import { Header, Header2 } from './components/Header'
-import { Input } from './components/Input'
-import { Empty } from './components/List/Empty'
-import { Header as ListHeader } from './components/List/Header'
-import { Item } from './components/List/Item'
->>>>>>> 0d29024ad47d34c727d2793f892132c70ada2067
+import { Button } from './components/Button/Button'
+import { Header } from './components/Header/Header'
+import { Input } from './components/Input/Input'
+import { Empty } from './components/Empty/Empty'
+import { Item } from './components/Item/Item'
 
 export interface ITask {
   id: number
@@ -22,8 +17,9 @@ export interface ITask {
 
 export function App() {
   const [tasks, setTasks] = useState<ITask[]>([]);
-  const [inputName, setInputName] = useState('')
+  const [inputName, setInputName] = useState('');
 
+  // Função para adicionar tarefa
   function addTask() {
     if (inputName.trim().length <= 0) {
       return;
@@ -41,9 +37,23 @@ export function App() {
     setInputName('');
   }
 
+  // remover tarefa
   function removeTask(id: number) {
     setTasks((prevTasks) => prevTasks.filter(task => task.id !== id));
   }
+
+  // alternar o status de conclusão de uma tarefa
+  function toggleTaskStatus(id: number) {
+    setTasks((prevTasks) => 
+      prevTasks.map(task => 
+        task.id === id ? { ...task, isChecked: !task.isChecked } : task
+      )
+    );
+  }
+
+  // Contador de tarefas
+  const totalTasks = tasks.length;
+  const completedTasks = tasks.filter(task => task.isChecked).length;
 
   return (
     <main>
@@ -61,6 +71,13 @@ export function App() {
           </Button>
         </div>
 
+        {/* Contador de Tarefas */}
+        <div className={styles.taskCounter}>
+            <p className={styles.completed}>Concluídas: {completedTasks}</p>
+            <p className={styles.total}>Total: {totalTasks}</p>
+        </div>
+
+
         <div className={styles.tasksList}>
           {tasks.length > 0 ? (
             <div>
@@ -69,7 +86,7 @@ export function App() {
                   key={task.id}
                   data={task}
                   removeTask={() => removeTask(task.id)}
-                  toggleTaskStatus={() => {}}
+                  toggleTaskStatus={() => toggleTaskStatus(task.id)} // Passando a função de alternância
                 />
               ))}
             </div>
@@ -79,5 +96,5 @@ export function App() {
         </div>
       </section>
     </main>
-  )
+  );
 }
